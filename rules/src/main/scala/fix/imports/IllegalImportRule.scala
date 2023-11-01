@@ -22,7 +22,7 @@ import scala.meta.{Importee, Importer}
 
 object IllegalImportRule {
   private val PackageRule = "^([\\p{Alnum}._]+)\\.\\*$".r
-  private val ClassRule = "^([\\p{Alnum}\\._]+)\\.([\\p{Alnum}]+)$".r
+  private val ClassRule = "^([\\p{Alnum}._]+)\\.([\\p{Alnum}]+)$".r
 
   def apply(rule: String, severity: LintSeverity): IllegalImportRule = {
     rule match {
@@ -39,7 +39,7 @@ trait IllegalImportRule {
 
 case class PackageIllegalImportRule(name: String, severity: LintSeverity) extends IllegalImportRule {
   override def findMatching(importer: Importer, importee: Importee): Option[Diagnostic] = {
-    if (importer.toString().startsWith(name)) {
+    if ((importer.ref.toString() + ".").startsWith(name + ".")) {
       val message = importee match {
         case Importee.Wildcard() =>
           "import of illegal package"

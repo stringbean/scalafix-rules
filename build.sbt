@@ -50,6 +50,10 @@ lazy val rules = projectMatrix
 lazy val input = projectMatrix
   .settings(
     publish / skip := true,
+    libraryDependencies ++= Seq(
+      "commons-lang"       % "commons-lang"  % "2.6",
+      "org.apache.commons" % "commons-lang3" % "3.13.0",
+    ),
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
@@ -58,6 +62,10 @@ lazy val input = projectMatrix
 lazy val output = projectMatrix
   .settings(
     publish / skip := true,
+    libraryDependencies ++= Seq(
+      "commons-lang" % "commons-lang" % "2.6",
+      "org.apache.commons" % "commons-lang3" % "3.13.0",
+    ),
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
