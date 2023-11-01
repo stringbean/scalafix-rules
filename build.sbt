@@ -22,6 +22,7 @@ inThisBuild(
         "scm:git:git@github.com:stringbean/scalafix-rules.git")),
     semanticdbEnabled    := true,
     semanticdbVersion    := scalafixSemanticdb.revision,
+    versionScheme        := Some("semver-spec"),
   ),
 )
 
@@ -119,9 +120,9 @@ lazy val tests = projectMatrix
 
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 
-releasePublishArtifactsAction := PgpKeys.publishSigned.value
+ThisBuild / releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
-releaseProcess := Seq[ReleaseStep](
+ThisBuild / releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
