@@ -22,4 +22,4 @@ jobs:
           distribution: corretto
 
       - name: Run tests
-        run: sbt test headerCheckAll scalafmtCheckAll
+        run: sbt +test headerCheckAll scalafmtCheckAll
