@@ -27,4 +27,5 @@ object IllegalImportsConfig {
   implicit val decoder: ConfDecoder[IllegalImportsConfig] =
     metaconfig.generic.deriveDecoder(default)
 }
-case class IllegalImportsConfig(imports: Seq[String] = Seq("com.sun"))
+
+case class IllegalImportsConfig(error: Seq[String] = Seq("com.sun"), warning: Seq[String] = Seq.empty)

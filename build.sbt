@@ -40,8 +40,7 @@ lazy val rules = projectMatrix
   .settings(
     moduleName := "scalafix-rules",
     libraryDependencies ++= Seq(
-      "ch.epfl.scala"          %% "scalafix-core"           % V.scalafixVersion,
-      "org.scala-lang.modules" %% "scala-collection-compat" % "2.11.0",
+      "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
     ),
     scalacOptions += "-Xsource:3",
   )

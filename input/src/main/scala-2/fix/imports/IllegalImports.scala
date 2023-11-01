@@ -1,6 +1,6 @@
 /*
 rules = [IllegalImports]
-IllegalImports.imports = [
+IllegalImports.error = [
   "com.sun.*"
   java.util.Date
   "java.awt.*"

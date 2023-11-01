@@ -16,7 +16,7 @@
 
 package fix.imports
 
-import scalafix.lint.Diagnostic
+import scalafix.lint.{Diagnostic, LintSeverity}
 
 import scala.meta.{Importee, Importer}
 
@@ -24,11 +24,11 @@ object IllegalImportRule {
   private val PackageRule = "^([\\p{Alnum}._]+)\\.\\*$".r
   private val ClassRule = "^([\\p{Alnum}\\._]+)\\.([\\p{Alnum}]+)$".r
 
-  def apply(rule: String): IllegalImportRule = {
+  def apply(rule: String, severity: LintSeverity): IllegalImportRule = {
     rule match {
-      case PackageRule(packageName) => PackageIllegalImportRule(packageName)
-      case ClassRule(packageName, className) => ClassIllegalImportRule(packageName, className)
-      case _ => BareClassIllegalImportRule(rule)
+      case PackageRule(packageName) => PackageIllegalImportRule(packageName, severity)
+      case ClassRule(packageName, className) => ClassIllegalImportRule(packageName, className, severity)
+      case _ => BareClassIllegalImportRule(rule, severity)
     }
   }
 }
@@ -37,7 +37,7 @@ trait IllegalImportRule {
   def findMatching(importer: Importer, importee: Importee): Option[Diagnostic]
 }
 
-case class PackageIllegalImportRule(name: String) extends IllegalImportRule {
+case class PackageIllegalImportRule(name: String, severity: LintSeverity) extends IllegalImportRule {
   override def findMatching(importer: Importer, importee: Importee): Option[Diagnostic] = {
     if (importer.toString().startsWith(name)) {
       val message = importee match {
@@ -48,7 +48,7 @@ case class PackageIllegalImportRule(name: String) extends IllegalImportRule {
       }
 
       Some(
-        Diagnostic("", message, importer.pos, s"Package $name has been marked as illegal"),
+        Diagnostic("", message, importer.pos, s"Package $name has been marked as illegal", severity),
       )
     } else {
       None
@@ -56,7 +56,9 @@ case class PackageIllegalImportRule(name: String) extends IllegalImportRule {
   }
 }
 
-case class ClassIllegalImportRule(packageName: String, className: String) extends IllegalImportRule {
+case class ClassIllegalImportRule(packageName: String, className: String, severity: LintSeverity)
+    extends IllegalImportRule {
+
   override def findMatching(importer: Importer, importee: Importee): Option[Diagnostic] = {
     if (importer.ref.toString() == packageName && importee.toString() == className) {
       Some(
@@ -64,13 +66,15 @@ case class ClassIllegalImportRule(packageName: String, className: String) extend
           "",
           "import of illegal class",
           importee.pos,
-          s"Class $packageName.$className has been marked as illegal"))
+          s"Class $packageName.$className has been marked as illegal",
+          severity),
+      )
     } else {
       None
     }
   }
 }
 
-case class BareClassIllegalImportRule(className: String) extends IllegalImportRule {
+case class BareClassIllegalImportRule(className: String, severity: LintSeverity) extends IllegalImportRule {
   override def findMatching(importer: Importer, importee: Importee): Option[Diagnostic] = None
 }

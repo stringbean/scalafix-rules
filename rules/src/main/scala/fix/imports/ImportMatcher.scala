@@ -16,12 +16,14 @@
 
 package fix.imports
 
+import scalafix.lint.LintSeverity
 import scalafix.v1.*
 
 import scala.meta.*
 
 class ImportMatcher(config: IllegalImportsConfig) {
-  private val rules = config.imports.map(IllegalImportRule.apply)
+  private val rules = config.error.map(rule => IllegalImportRule.apply(rule, LintSeverity.Error)) ++
+    config.warning.map(rule => IllegalImportRule.apply(rule, LintSeverity.Warning))
 
   def findIllegalImports(i: Import): Seq[Patch] = {
     i.importers flatMap { importer =>

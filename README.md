@@ -29,7 +29,8 @@ import com.sun.net.httpserver.HttpServer
 
 | Name      | Type           | Description                                                                                                                    |
 |-----------|----------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `imports` | `List[String]` | List of imports to make illegal. These can be fully-qualified classes (`java.util.Vector`) or package wildcards (`com.sun.*`). |
+| `error`   | `List[String]` | List of imports to make illegal. These can be fully-qualified classes (`java.util.Vector`) or package wildcards (`com.sun.*`). |
+| `warning` | `List[String]` | List of imports to warn on usage. These are in the same format as `error` but will not fail the buid.                          |
 
 #### Defaults
 
@@ -40,4 +41,5 @@ IllegalImports.imports = [
 ```
 
 [checkstyle-illegalimport]: https://checkstyle.sourceforge.io/checks/imports/illegalimport.html#IllegalImport
+
 [scalastyle-illegalimports]: http://www.scalastyle.org/rules-1.0.0.html#org_scalastyle_scalariform_IllegalImportsChecker
