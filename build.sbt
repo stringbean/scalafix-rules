@@ -120,7 +120,6 @@ lazy val tests = projectMatrix
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
-releaseCrossBuild             := true
 
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
