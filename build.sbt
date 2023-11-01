@@ -43,6 +43,7 @@ lazy val rules = projectMatrix
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
     ),
     scalacOptions += "-Xsource:3",
+    publishTo  := sonatypePublishToBundle.value,
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
@@ -63,7 +64,7 @@ lazy val output = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "commons-lang" % "commons-lang" % "2.6",
+      "commons-lang"       % "commons-lang"  % "2.6",
       "org.apache.commons" % "commons-lang3" % "3.13.0",
     ),
   )
@@ -115,3 +116,25 @@ lazy val tests = projectMatrix
   )
   .dependsOn(rules)
   .enablePlugins(ScalafixTestkitPlugin)
+
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
+
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
+releaseCrossBuild             := true
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  releaseStepCommand("scalafmtCheckAll"),
+  releaseStepCommand("headerCheckAll"),
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  publishArtifacts,
+  releaseStepCommand("sonatypeBundleRelease"),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges,
+)
