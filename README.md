@@ -1,5 +1,12 @@
 # Scalafix rules for scalafix-rules
 
+[![Build Status](https://img.shields.io/github/actions/workflow/status/stringbean/scalafix-rules/ci.yml?branch=main)](https://github.com/stringbean/scalafix-rules/actions/workflows/ci.yml)
+[![Current Version](https://index.scala-lang.org/stringbean/scalafix-rules/scalafix-rules/latest.svg)](https://index.scala-lang.org/stringbean/scalafix-rules/scalafix-rules) 
+[![Known Vulnerabilities](https://snyk.io/test/github/stringbean/scalafix-rules/badge.svg?targetFile=build.sbt)](https://snyk.io/test/github/stringbean/scalafix-rules?targetFile=build.sbt)
+![Scala 2.12](https://img.shields.io/badge/Scala-2.12-blue)
+![Scala 2.13](https://img.shields.io/badge/Scala-2.13-blue)
+![Scala 3](https://img.shields.io/badge/Scala-3-blue)
+
 ## Installation
 
 ```scala
@@ -41,5 +48,5 @@ IllegalImports.imports = [
 ```
 
 [checkstyle-illegalimport]: https://checkstyle.sourceforge.io/checks/imports/illegalimport.html#IllegalImport
-
 [scalastyle-illegalimports]: http://www.scalastyle.org/rules-1.0.0.html#org_scalastyle_scalariform_IllegalImportsChecker
+
