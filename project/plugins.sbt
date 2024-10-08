@@ -1,4 +1,4 @@
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.12.1")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.13.0")
 
 // code style
 addSbtPlugin("de.heikoseeberger" % "sbt-header"   % "5.10.0")
