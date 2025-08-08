@@ -44,7 +44,11 @@ lazy val rules = projectMatrix
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
     ),
     scalacOptions += "-Xsource:3",
-    publishTo  := sonatypePublishToBundle.value,
+    publishTo  := {
+      val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+      if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+      else localStaging.value
+    },
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
@@ -122,7 +126,8 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 
 ThisBuild / releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
-ThisBuild / releaseProcess := Seq[ReleaseStep](
+ThisBuild / releaseCrossBuild := true
+ThisBuild / releaseProcess    := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
@@ -132,8 +137,8 @@ ThisBuild / releaseProcess := Seq[ReleaseStep](
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
-  releaseStepCommandAndRemaining("+publishSigned"),
-  releaseStepCommand("sonatypeBundleRelease"),
+  publishArtifacts,
+  releaseStepCommand("sonaRelease"),
   setNextVersion,
   commitNextVersion,
   pushChanges,
