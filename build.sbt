@@ -1,7 +1,7 @@
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
-lazy val scala3Version      = "3.3.4"
+lazy val scala3Version      = "3.3.7"
 
 inThisBuild(
   List(
@@ -49,6 +49,7 @@ lazy val rules = projectMatrix
       if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
       else localStaging.value
     },
+    publishMavenStyle := true
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
