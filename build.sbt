@@ -59,7 +59,7 @@ lazy val input = projectMatrix
     publish / skip := true,
     libraryDependencies ++= Seq(
       "commons-lang"       % "commons-lang"  % "2.6",
-      "org.apache.commons" % "commons-lang3" % "3.13.0",
+      "org.apache.commons" % "commons-lang3" % "3.20.0",
     ),
   )
   .defaultAxes(VirtualAxis.jvm)
@@ -71,7 +71,7 @@ lazy val output = projectMatrix
     publish / skip := true,
     libraryDependencies ++= Seq(
       "commons-lang"       % "commons-lang"  % "2.6",
-      "org.apache.commons" % "commons-lang3" % "3.13.0",
+      "org.apache.commons" % "commons-lang3" % "3.20.0",
     ),
   )
   .defaultAxes(VirtualAxis.jvm)
