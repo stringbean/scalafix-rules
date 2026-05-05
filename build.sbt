@@ -39,17 +39,17 @@ lazy val `scalafix-rules` = (project in file("."))
 
 lazy val rules = projectMatrix
   .settings(
-    moduleName := "scalafix-rules",
+    moduleName        := "scalafix-rules",
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
     ),
     scalacOptions += "-Xsource:3",
-    publishTo  := {
+    publishTo         := {
       val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
       if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
       else localStaging.value
     },
-    publishMavenStyle := true
+    publishMavenStyle := true,
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
